@@ -11,7 +11,7 @@ typedef struct {
     float pitch;
     float yaw;
 } RCData_t;
-extern RCData_t RCData;
+extern volatile RCData_t RCData;
 
 #define MSP_ARM_IT		5
 #define MSP_DISARM_IT	6

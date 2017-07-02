@@ -63,10 +63,6 @@ typedef struct{
 	float roll; //rad
 	float pitch; //rad
 	float yaw; //rad
-	float altitude; //m
-	float rateOfClimb; //m/s
-	float takeOffPressure; //Pa
-	float referencePressure; //Pa
 } AHRSData_t;
 extern AHRSData_t AHRSData;
  
@@ -74,7 +70,7 @@ typedef struct{
 	float altitude; //m
 	float rateOfClimb; //m/s
 	float takeOffPressure; //Pa
-	float referencePressure; //Pa
+	float inv_referencePressure; //Pa
 } NAVData_t;
 extern NAVData_t NAVData;
 

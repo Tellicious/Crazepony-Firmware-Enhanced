@@ -19,7 +19,7 @@
 .\output\mpu6050.o: .\Lib\inc\misc.h
 .\output\mpu6050.o: HardWareDriver\I2C.h
 .\output\mpu6050.o: .\User_Src\GlobalVariables.h
-.\output\mpu6050.o: .\HardWareDriver\NRF24L01.h
+.\output\mpu6050.o: .\HardWareDriver\NRF24.h
 .\output\mpu6050.o: .\User_Src\ConfigParams.h
 .\output\mpu6050.o: HardWareDriver\config.h
 .\output\mpu6050.o: .\User_Src\stm32f10x_it.h
@@ -27,7 +27,6 @@
 .\output\mpu6050.o: HardWareDriver\delay.h
 .\output\mpu6050.o: HardWareDriver\Led.h
 .\output\mpu6050.o: HardWareDriver\Motors.h
-.\output\mpu6050.o: HardWareDriver\IIC.h
 .\output\mpu6050.o: HardWareDriver\SPI.h
 .\output\mpu6050.o: .\Control\control.h
 .\output\mpu6050.o: HardWareDriver\stmflash.h

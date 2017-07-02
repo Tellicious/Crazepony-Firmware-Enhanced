@@ -22,10 +22,9 @@
 .\output\imu.o: .\HardWareDriver\delay.h
 .\output\imu.o: .\HardWareDriver\Led.h
 .\output\imu.o: .\User_Src\GlobalVariables.h
-.\output\imu.o: .\HardWareDriver\NRF24L01.h
+.\output\imu.o: .\HardWareDriver\NRF24.h
 .\output\imu.o: .\HardWareDriver\MPU6050.h
 .\output\imu.o: .\HardWareDriver\Motors.h
-.\output\imu.o: .\HardWareDriver\IIC.h
 .\output\imu.o: .\HardWareDriver\SPI.h
 .\output\imu.o: .\Control\control.h
 .\output\imu.o: .\HardWareDriver\stmflash.h

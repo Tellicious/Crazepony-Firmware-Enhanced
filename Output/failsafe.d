@@ -24,10 +24,9 @@
 .\output\failsafe.o: .\HardWareDriver\delay.h
 .\output\failsafe.o: .\HardWareDriver\Led.h
 .\output\failsafe.o: .\User_Src\GlobalVariables.h
-.\output\failsafe.o: .\HardWareDriver\NRF24L01.h
+.\output\failsafe.o: .\HardWareDriver\NRF24.h
 .\output\failsafe.o: .\HardWareDriver\MPU6050.h
 .\output\failsafe.o: .\HardWareDriver\Motors.h
-.\output\failsafe.o: .\HardWareDriver\IIC.h
 .\output\failsafe.o: .\HardWareDriver\SPI.h
 .\output\failsafe.o: .\Control\control.h
 .\output\failsafe.o: .\HardWareDriver\stmflash.h

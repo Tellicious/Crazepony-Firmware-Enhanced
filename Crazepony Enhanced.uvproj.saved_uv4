@@ -457,11 +457,6 @@
               <FilePath>.\HardWareDriver\Motors.c</FilePath>
             </File>
             <File>
-              <FileName>NRF24L01.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\NRF24L01.c</FilePath>
-            </File>
-            <File>
               <FileName>SPI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HardWareDriver\SPI.c</FilePath>
@@ -479,7 +474,7 @@
             <File>
               <FileName>Battery.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\HardWareDriver\Battery.c</FilePath>
+              <FilePath>.\HardwareDriver\Battery.c</FilePath>
             </File>
             <File>
               <FileName>MS5611.c</FileName>
@@ -647,9 +642,39 @@
               <FilePath>.\Control\Control.c</FilePath>
             </File>
             <File>
+              <FileName>PID_AERO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Control\PID_AERO.c</FilePath>
+            </File>
+            <File>
               <FileName>ReceiveData.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Control\ReceiveData.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Estimation</GroupName>
+          <Files>
+            <File>
+              <FileName>MatrixF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Estimation\MatrixF.c</FilePath>
+            </File>
+            <File>
+              <FileName>NumMethodsF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Estimation\NumMethodsF.c</FilePath>
+            </File>
+            <File>
+              <FileName>Altitude_KF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Estimation\Altitude_KF.c</FilePath>
+            </File>
+            <File>
+              <FileName>Altitude_KF.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Estimation\Altitude_KF.h</FilePath>
             </File>
           </Files>
         </Group>

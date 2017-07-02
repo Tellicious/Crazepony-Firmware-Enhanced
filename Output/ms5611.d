@@ -23,4 +23,4 @@
 .\output\ms5611.o: HardWareDriver\delay.h
 .\output\ms5611.o: .\User_Src\ConfigParams.h
 .\output\ms5611.o: .\User_Src\GlobalVariables.h
-.\output\ms5611.o: .\HardWareDriver\NRF24L01.h
+.\output\ms5611.o: .\HardWareDriver\NRF24.h

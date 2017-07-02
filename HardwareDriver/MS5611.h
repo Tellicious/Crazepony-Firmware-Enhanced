@@ -9,13 +9,7 @@
 #define MS5611_OSR_2048 0x06 //Conversion time 4.6ms  Resolution 0.018mbar
 #define MS5611_OSR_4096 0x08 //Conversion time 9.1ms  Resolution 0.012mbar
 
-extern volatile float MS5611_Altitude;
-extern uint8_t Baro_ALT_Updated;
-extern uint8_t paOffsetInited;
-
 void MS5611_Init(uint8_t press_OSR, uint8_t temp_OSR);
-void MS5611_ThreadNew(void) ;
-uint8_t  WaitBaroInitOffset(void);
 uint8_t MS5611_Thread(void);
 void getTakeOffPressure(void);
 void setReferencePressure(float referencePressureVal);

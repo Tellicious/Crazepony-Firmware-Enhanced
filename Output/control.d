@@ -23,7 +23,7 @@
 .\output\control.o: .\HardWareDriver\mpu6050.h
 .\output\control.o: .\User_Src\imu.h
 .\output\control.o: .\User_Src\GlobalVariables.h
-.\output\control.o: .\HardWareDriver\NRF24L01.h
+.\output\control.o: .\HardWareDriver\NRF24.h
 .\output\control.o: .\HardWareDriver\led.h
 .\output\control.o: .\HardWareDriver\stmflash.h
 .\output\control.o: Control\ReceiveData.h

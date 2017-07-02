@@ -23,10 +23,9 @@
 .\output\main.o: .\HardWareDriver\delay.h
 .\output\main.o: .\HardWareDriver\Led.h
 .\output\main.o: .\User_Src\GlobalVariables.h
-.\output\main.o: .\HardWareDriver\NRF24L01.h
+.\output\main.o: .\HardWareDriver\NRF24.h
 .\output\main.o: .\HardWareDriver\MPU6050.h
 .\output\main.o: .\HardWareDriver\Motors.h
-.\output\main.o: .\HardWareDriver\IIC.h
 .\output\main.o: .\HardWareDriver\SPI.h
 .\output\main.o: .\Control\control.h
 .\output\main.o: .\HardWareDriver\stmflash.h
@@ -44,4 +43,4 @@
 .\output\main.o: User_Src\FailSafe.h
 .\output\main.o: .\HardWareDriver\I2C.h
 .\output\main.o: .\HardWareDriver\Init_Config.h
-.\output\main.o: .\HardWareDriver\NRF24.h
+.\output\main.o: .\Estimation\Altitude_KF.h

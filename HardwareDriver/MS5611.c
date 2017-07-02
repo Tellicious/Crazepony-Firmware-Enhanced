@@ -14,46 +14,6 @@
 #define MS5611_PROM_BASE_ADDR 0xA2 // by adding ints from 0 to 6 we can read all the prom configuration values. 
 // C1 will be at 0xA2 and all the subsequent are multiples of 2
 
-
-
-
-
-
-
-
-/**************************实现函数********************************************
-*函数原型:		float MS5611_getAltitude(void)
-*功　　能:	    将当前的气压值转成 高度。	 
-*******************************************************************************/
-float MS5611_getAltitude(void)
-{
-	float Altitude;
-	static uint8_t paInitCnt = 0;
-	static float Alt_Offset_Pa = 0; 
-	static float paOffsetNum = 0; 
-	// 是否初始化过0米气压值？
-	if(Alt_Offset_Pa == 0)
-	{ 
-		if(paInitCnt > 50)
-		{
-			Alt_Offset_Pa = paOffsetNum / paInitCnt;
-			paOffsetInited=1;
-		}
-		else
-			paOffsetNum += INSData.pressure;
-		
-		paInitCnt++;
-		
-		Altitude = 0; //高度 为 0
-		
-		return Altitude;
-	}
-	//计算相对于上电时的位置的高度值 。单位为m
-	Altitude = 4433000.0 * (1 - powf((INSData.pressure / Alt_Offset_Pa), 0.1903))*0.01f;
-	
-	return Altitude; 
-}
-
 // defines
 #define READ_TEMPERATURE 0x25
 #define READ_PRESSURE 0x52
@@ -128,11 +88,7 @@ void MS5611_Init(uint8_t press_OSR, uint8_t temp_OSR) {
 		_press_delay = 9500;
 		break;
 	}
-	NAVData.referencePressure = INS_QNE_VAL;
-}
-
-float calculateAltitude(void){
-	return (44330.0f * (1 - powf((INSData.pressure / NAVData.referencePressure), 0.1903)));
+	NAVData.inv_referencePressure = 1.0 / INS_QNE_VAL;
 }
 
 void MS5611_tempCompPressure(int32_t ADCPress, int32_t ADCTemp) {
@@ -162,7 +118,6 @@ void MS5611_tempCompPressure(int32_t ADCPress, int32_t ADCTemp) {
 
 	INSData.pressure = (((ADCPress * SENS) >> 21) - OFF) >> 15;
 	INSData.temperature = TEMP * 0.01f;
-	MS5611_Altitude = MS5611_getAltitude(); 
 }
 
 uint8_t MS5611_Thread(void) {
@@ -180,7 +135,6 @@ uint8_t MS5611_Thread(void) {
 		if(micros() > _EndConversionTime) {
 			ADCPress = MS5611_getConversion();
 			MS5611_tempCompPressure(ADCPress, ADCTemp);
-			Baro_ALT_Updated = 0xff;
 			I2C_sendCMD(MS5611_ADDR, _TEMP_CMD);
 			_EndConversionTime = micros() + _temp_delay;
 			_taskToDo = READ_TEMPERATURE;
@@ -214,82 +168,8 @@ void getTakeOffPressure(void){
 }
 
 void setReferencePressure(float referencePressureVal){
-	NAVData.referencePressure = referencePressureVal;
+	NAVData.inv_referencePressure = 1.0 / referencePressureVal;
 	return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 气压计状态机
-#define SCTemperature  0x01	  //开始 温度转换
-#define CTemperatureing  0x02  //正在转换温度
-#define SCPressure  0x03	  //开始转换 气压
-#define SCPressureing  0x04	  //正在转换气压值
-static uint8_t  Now_doing = SCTemperature;
-uint8_t paOffsetInited=0;
-uint8_t Baro_ALT_Updated = 0; //气压计高度更新完成标志。
-volatile float MS5611_Altitude;
-
-void MS5611_ThreadNew(void) {
-	static uint32_t ADCTemp, ADCPress, _EndConversionTime;
-	switch(Now_doing) {
- 		case SCTemperature:
- 			I2C_sendCMD(MS5611_ADDR, _TEMP_CMD);
-			_EndConversionTime = micros() + _temp_delay;
-			Now_doing = CTemperatureing;
-			break;
-		case CTemperatureing:
-			if(micros() > _EndConversionTime) {
-				ADCTemp = MS5611_getConversion();	
-				I2C_sendCMD(MS5611_ADDR, _PRESS_CMD);
-				_EndConversionTime = micros() + _press_delay;
-				Now_doing = SCPressureing;
-			}
-			break;
- 
-		case SCPressureing:
-			if(micros() > _EndConversionTime) {
-				ADCPress = MS5611_getConversion();
-				MS5611_tempCompPressure(ADCPress, ADCTemp);
-				Baro_ALT_Updated = 0xff;
-				I2C_sendCMD(MS5611_ADDR, _TEMP_CMD);
-				_EndConversionTime = micros() + _temp_delay;
-				Now_doing = CTemperatureing;
-			}
-			break;
-		default: 
-			Now_doing = CTemperatureing;
-			break;
-	}
-}
-
-//注意，使用前确保
-uint8_t  WaitBaroInitOffset(void) {
-	uint32_t t_end = micros() + 50 * 50000;
-  while(!paOffsetInited){
-			MS5611_ThreadNew();
-			if(micros() >= t_end) {
-				return 0;
-			}
-	}
-	return 1;
-}
-
 
 //------------------End of File----------------------------

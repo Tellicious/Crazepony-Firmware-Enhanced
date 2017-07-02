@@ -22,10 +22,9 @@
 .\output\led.o: .\Lib\inc\stm32f10x_pwr.h
 .\output\led.o: HardWareDriver\delay.h
 .\output\led.o: .\User_Src\GlobalVariables.h
-.\output\led.o: .\HardWareDriver\NRF24L01.h
+.\output\led.o: .\HardWareDriver\NRF24.h
 .\output\led.o: HardWareDriver\MPU6050.h
 .\output\led.o: HardWareDriver\Motors.h
-.\output\led.o: HardWareDriver\IIC.h
 .\output\led.o: HardWareDriver\SPI.h
 .\output\led.o: .\Control\control.h
 .\output\led.o: HardWareDriver\stmflash.h

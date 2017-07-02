@@ -1,5 +1,5 @@
 /*
-		 	____                      _____                  +---+
+      ____                      _____                  +---+
      / ___\                     / __ \                 | R |
     / /                        / /_/ /                 +---+
    / /   ________  ____  ___  / ____/___  ____  __   __
@@ -25,14 +25,12 @@ ReceiveData.c file
 #define REQ_ARM 0xA4
 #define REQ_DISARM 0xB2
 #define REQ_IMU_CAL 0xC1
-#define CONSTRAIN(a,min,max) ((a<min)?(min):((a>max)?(max):(a)))
+#define CONSTRAIN(a,min,max) ((a<min)?(a=min):((a>max)?(a=max):(a=a)))
 
 uint8_t RCRawData[32]; //raw data received from NRF
 uint8_t RCCommand = 0;
 uint32_t lastGetRCTime;
-RCData_t  RCData;
-
-//uint16_t rcData[4]={1500,1500,1500,1500};
+volatile RCData_t  RCData;
 
 extern float dbScaleLinear(float x, float x_end, float deadband);
 

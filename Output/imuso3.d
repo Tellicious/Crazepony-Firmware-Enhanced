@@ -21,5 +21,5 @@
 .\output\imuso3.o: User_Src\IMU.h
 .\output\imuso3.o: User_Src\IMUSO3.h
 .\output\imuso3.o: User_Src\GlobalVariables.h
-.\output\imuso3.o: .\HardWareDriver\NRF24L01.h
+.\output\imuso3.o: .\HardWareDriver\NRF24.h
 .\output\imuso3.o: User_Src\ConfigParams.h

@@ -33,8 +33,8 @@
 #include "ConfigParams.h"
 #include "stdint.h"
 #include "NRF24.h"
-#include "NRF24L01.h"
 #include "MS5611.h"
+#include "Altitude_KF.h"
 
 //sw counter
 uint16_t  batCnt; 
@@ -63,13 +63,20 @@ int main(void){
 	MPU6050_initialize(MPU6050_GYRO_FS_2000, MPU6050_ACCEL_FS_4, MPU6050_DLPF_BW_98);
 	MS5611_Init(MS5611_OSR_4096, MS5611_OSR_4096);
 	
+	alt_KF_init(10); //100 Hz
+	
+	
 	BatteryCheck();
 
 	IMU_Init();			// sample rate and cutoff freq.  sample rate is too low now due to using dmp.
 	MotorsPWMFlash(10,10,10,10);
 	altCtrlMode=MANUAL;
-	WaitBaroInitOffset();		//等待气压初始化高度完成
+	// Get current pressure and set it as reference pressure for ground level
+	getTakeOffPressure();
+	setReferencePressure(NAVData.takeOffPressure);
+	// Power On LEDs sequence
 	PowerOn();
+	
 	while (1){
 		//100Hz Loop
 		if(loop100HzFlag){
@@ -80,7 +87,7 @@ int main(void){
 				IMUSO3Thread();
 				accUpdated=1;
 			
-				MS5611_Thread();		//FSM, take aboue 0.5ms some time
+				MS5611_Thread();
 
 				if(imuCaliFlag){
 						if(IMU_Calibrate()){

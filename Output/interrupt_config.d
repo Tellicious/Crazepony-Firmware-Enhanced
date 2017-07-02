@@ -25,10 +25,9 @@
 .\output\interrupt_config.o: HardwareDriver\delay.h
 .\output\interrupt_config.o: HardwareDriver\Led.h
 .\output\interrupt_config.o: .\User_Src\GlobalVariables.h
-.\output\interrupt_config.o: .\HardWareDriver\NRF24L01.h
+.\output\interrupt_config.o: .\HardWareDriver\NRF24.h
 .\output\interrupt_config.o: HardwareDriver\MPU6050.h
 .\output\interrupt_config.o: HardwareDriver\Motors.h
-.\output\interrupt_config.o: HardwareDriver\IIC.h
 .\output\interrupt_config.o: HardwareDriver\SPI.h
 .\output\interrupt_config.o: .\Control\control.h
 .\output\interrupt_config.o: HardwareDriver\stmflash.h

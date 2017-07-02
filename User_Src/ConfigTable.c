@@ -49,10 +49,10 @@ void TableWriteEEPROM(void)
 }
 
 
-extern u8 RX_ADDRESS[RX_ADR_WIDTH];
+//extern u8 RX_ADDRESS[RX_ADR_WIDTH];
 
 
-extern u8 NRFMatched;
+//extern u8 NRFMatched;
 
 
 void TableToParam(void)
@@ -83,12 +83,12 @@ void TableToParam(void)
 		}
 		
 		for(i=0;i<5;i++){
-			((u8 *)(&RX_ADDRESS))[i] = ((float *)(&table.NRFaddr))[i];
+			//((u8 *)(&RX_ADDRESS))[i] = ((float *)(&table.NRFaddr))[i];
 			
-			printf("RX_ADDRESS[%d]:0x%x\r\n",i,RX_ADDRESS[i]);
+			//printf("RX_ADDRESS[%d]:0x%x\r\n",i,RX_ADDRESS[i]);
 		}
 		
-		NRFMatched = table.NRFmatchFlag;
+		//NRFMatched = table.NRFmatchFlag;
 		
 		
 		
@@ -102,7 +102,7 @@ void ParamToTable(void)
 		for(i=0;i<3;i++)
 		{
 			((float *)(&table.pidPitch))[i]=((float *)(&pitch_angle_PID))[i];
-				temp=((float *)(&roll_angle_PID))[i];
+				temp =((float *)(&roll_angle_PID))[i];
 				*((float *)(&table.pidRoll) + i) =  ((float *)(&roll_angle_PID))[i];
 			((float *)(&table.pidRoll))[i]=((float *)(&roll_angle_PID))[i];
 			((float *)(&table.pidYaw))[i]=((float *)(&yaw_angle_PID))[i];
@@ -119,10 +119,10 @@ void ParamToTable(void)
 			table.gyroOffset[i]=imu.gyroOffset[i];
 		}
 		
-		for(i=0;i<5;i++)
-		((float *)(&table.NRFaddr))[i] = ((u8 *)(&RX_ADDRESS))[i];
+		//for(i=0;i<5;i++)
+		//((float *)(&table.NRFaddr))[i] = ((u8 *)(&RX_ADDRESS))[i];
 		
-		table.NRFmatchFlag = NRFMatched;
+		//table.NRFmatchFlag = NRFMatched;
 		
 		
 }

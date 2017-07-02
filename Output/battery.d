@@ -1,5 +1,5 @@
-.\output\battery.o: HardWareDriver\Battery.c
-.\output\battery.o: HardWareDriver\Battery.h
+.\output\battery.o: HardwareDriver\Battery.c
+.\output\battery.o: HardwareDriver\Battery.h
 .\output\battery.o: .\StartUp\stm32f10x.h
 .\output\battery.o: .\StartUp\core_cm3.h
 .\output\battery.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -19,6 +19,6 @@
 .\output\battery.o: .\Lib\inc\misc.h
 .\output\battery.o: .\User_Src\ConfigParams.h
 .\output\battery.o: .\User_Src\GlobalVariables.h
-.\output\battery.o: .\HardWareDriver\NRF24L01.h
+.\output\battery.o: .\HardWareDriver\NRF24.h
 .\output\battery.o: .\Control\ReceiveData.h
 .\output\battery.o: .\Control\control.h

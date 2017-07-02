@@ -1,5 +1,4 @@
-/*
-      ____                      _____                  +---+
+/*     ___                      _____                  +---+
      / ___\                     / __ \                 | R |
     / /                        / /_/ /                 +---+
    / /   ________  ____  ___  / ____/___  ____  __   __
@@ -10,8 +9,7 @@
                                             ____/ /
                                            /_____/
 Filename:	Altitude.c
-Author:		祥 、小马、nieyong
-说明：在这里完成高度融合，用于Z轴的自动悬停
+Author:
 ------------------------------------
 */
 #include "MS5611.h"
@@ -73,18 +71,18 @@ void AltitudeCombineThread(void)
   dt = (tPre>0)?((t-tPre)/1000000.0f):0;
 	tPre=t;
 	
-	if(!paOffsetInited)	//wait baro to init its offset
-		return;
+//	if(!paOffsetInited)	//wait baro to init its offset
+//		return;
 	
 	if(!imu.ready)
 		return;
 	
 	//store err when sensor update 
-	if(Baro_ALT_Updated)	//后面应该在sensor数值后加一个timeStamp，判断是否更新
+/*	if(Baro_ALT_Updated)	//后面应该在sensor数值后加一个timeStamp，判断是否更新
 	{
-			corr_baro = 0 - MS5611_Altitude - z_est[0];		// MS5611_Altitude baro alt, is postive above offset level. not in NED. z_est is in NED frame. 
+			corr_baro = 0 - NAVData.altitude - z_est[0];		// MS5611_Altitude baro alt, is postive above offset level. not in NED. z_est is in NED frame. 
 			Baro_ALT_Updated=0;
-	}
+	}*/
  
 	if(accUpdated)
 	{

@@ -60,7 +60,7 @@ void TIM3_IRQHandler(void) {
 				printf(" Motor M4 PWM---> %d\r\n",TIM2->CCR4);
 				printf("====================================\r\n");*/
 				printf(" Pressure ---> %5.2f Pa\r\n", INSData.pressure);
-				printf(" Altitude ---> %5.2f m\r\n", MS5611_Altitude);
+				//printf(" Altitude ---> %5.2f m\r\n", MS5611_Altitude);
 				printf(" Temperature---> %5.2f °C\r\n", INSData.temperature);
 				/*printf("====================================\r\n");
 				printf(" Battery Voltage---> %3.2fV\r\n",Battery.voltage);
