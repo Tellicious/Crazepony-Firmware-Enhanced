@@ -26,15 +26,18 @@
 #include "Altitude.h"
 #include "ConfigTable.h"
 #include "IMUSO3.h"
-#include "control.h"
+#include "Control.h"
 #include "FailSafe.h"
-#include "I2C.h"
+//#include "I2C.h"
 #include "Init_Config.h"
 #include "ConfigParams.h"
+#include "GlobalVariables.h"
 #include "stdint.h"
 #include "NRF24.h"
 #include "MS5611.h"
 #include "Altitude_KF.h"
+#include "SafetyChecks.h"
+#include "Autopilot.h"
 
 //sw counter
 uint16_t  batCnt; 
@@ -62,11 +65,9 @@ int main(void){
 	NRF24_RXMatch(&NRF24_rx_address, 4, 10, 7500);
 	MPU6050_initialize(MPU6050_GYRO_FS_2000, MPU6050_ACCEL_FS_4, MPU6050_DLPF_BW_98);
 	MS5611_Init(MS5611_OSR_4096, MS5611_OSR_4096);
+	CtrlPIDInit();
 	
 	alt_KF_init(10); //100 Hz
-	
-	
-	BatteryCheck();
 
 	IMU_Init();			// sample rate and cutoff freq.  sample rate is too low now due to using dmp.
 	MotorsPWMFlash(10,10,10,10);
@@ -74,8 +75,7 @@ int main(void){
 	// Get current pressure and set it as reference pressure for ground level
 	getTakeOffPressure();
 	setReferencePressure(NAVData.takeOffPressure);
-	// Power On LEDs sequence
-	PowerOn();
+	
 	
 	while (1){
 		//100Hz Loop
@@ -103,11 +103,12 @@ int main(void){
 				execTime[1]=micros()-startTime[1];
 		}
 		
-		//Need to recieve 2401 RC instantly so as to clear reg.
+		//Need to receive NRF2401 RC instantly
 		
 		if (NRF24_available()){
 			NRF24_read(&RCRawData, sizeof(RCRawData));
 			ReceiveDataFromRC();
+			RCCheckRst();	
 		}
 		//50Hz Loop
 		if(loop50HzFlag)
@@ -140,25 +141,27 @@ int main(void){
 				loop10HzFlag=0; 
 				realExecPrd[2]=micros()-startTime[2];
 				startTime[2]=micros(); 
-			
 				//Check battery every BATT_CHK_PRD ds
 				if((++batCnt) >= BATT_CHK_PRD){
 					batCnt=0; 
 					BatteryCheck();
 				}
-				
+				//Check if RC is still connected
+				RCCheck()
+				//Check if tilt limit is exceeded
+				TiltCheck();
+				//Check if altitude limit is exceeded
+				AltitudeCheck();
+				//Command LEDs
+				LEDFSM();
 				
 				//EEPROM Conifg Table request to write. 
 				if(gParamsSaveEEPROMRequset){
 						gParamsSaveEEPROMRequset=0;
 						SaveParamsToEEPROM();
 				}
-
 				//失控保护，例如侧翻，丢失遥控信号等
 				FailSafe();	
-				
-				LEDFSM();
-				
 				execTime[2]=micros()-startTime[2];
 		}
   }

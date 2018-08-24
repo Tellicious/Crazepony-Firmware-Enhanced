@@ -18,11 +18,11 @@ typedef struct {
     float intMax;	//upper integral saturation limit
     float eOld;	//previous step error
     float DuD;	//derivative action contribution
-		float DuI;	//integral action contribution
+	float DuI;	//integral action contribution
 }PID_t;
 
 void PID_init(PID_t *PID, float kp_val, float ki_val, float kd_val, float nd_val, uint32_t dT, float sat_min, float sat_max); //dT in ms
-uint8_t PID_calc(PID_t *PID, float set_point, float measure); //return 2 if integral term is saturated
+uint8_t PID_calc(PID_t *PID, float set_point, float measure); //return 0 if integral term is saturated
 float PID_getKp(PID_t *PID);
 float PID_getKi (PID_t *PID);
 float PID_getKd (PID_t *PID);
@@ -32,7 +32,6 @@ void PID_setKd (PID_t *PID, float kd_val, float nd_val);
 void PID_setIntegralSaturation(PID_t *PID, float sat_min, float sat_max);
 void PID_reset(PID_t *PID);
 
-//PID_calcAll(RC_Data_t *RC_Data, IMU_Data_t *IMU_Data);
 #ifdef __cplusplus
 }
 #endif

@@ -25,20 +25,19 @@ ReceiveData.c file
 #define REQ_ARM 0xA4
 #define REQ_DISARM 0xB2
 #define REQ_IMU_CAL 0xC1
+#define REQ_LAND
+#define REQ_TAKEOFF
+
 #define CONSTRAIN(a,min,max) ((a<min)?(a=min):((a>max)?(a=max):(a=a)))
 
 uint8_t RCRawData[32]; //raw data received from NRF
-uint8_t RCCommand = 0;
-uint32_t lastGetRCTime;
-volatile RCData_t  RCData;
-
-extern float dbScaleLinear(float x, float x_end, float deadband);
 
 void RCDataProcess(void){
-	if ((RCCommand == REQ_ARM) && (warnings.ALL == 1)){
+/*
+	if ((RCData.command == REQ_ARM) && (warnings.ALL == 0)){
 		flightModes.FLIGHT_ENABLED = 1;
 	}
-	else if (RCCommand == REQ_DISARM){
+	else if (RCData.command == REQ_DISARM){
 		flightModes.FLIGHT_ENABLED = 0;
 		//////////////////// CHE SERVE?
 		altCtrlMode=MANUAL;		//上锁后加的处理
@@ -48,46 +47,33 @@ void RCDataProcess(void){
 		offLandFlag=0;
 		///////////////////
 	}
-	RCCommand = 0;
-	
-	//RCData.throttle = (float) ((uint16_t) RCRawData[5] | (RCRawData[6]<<8));
-	RCData.throttle = (flightModes.LANDING) ? 1500 : ((float) ((uint16_t) RCRawData[5] | (RCRawData[6]<<8)));
+	RCData.command = 0;
+	*/
+	RCData.throttle = (float) ((uint16_t) RCRawData[5] | (RCRawData[6]<<8));
 	RCData.roll = (float) ((uint16_t) RCRawData[11] | (RCRawData[12]<<8));
 	RCData.pitch = (float) ((uint16_t) RCRawData[9] | (RCRawData[10]<<8));
 	RCData.yaw = (float) ((uint16_t) RCRawData[7]   |  (RCRawData[8]<<8));
-	
-	/*if(flightModes.LANDING){
-		rcData[THROTTLE] = 1500;
-		rcData[YAW] = 1500;
-		rcData[PITCH] = 1500;
-		rcData[ROLL] = 1500;
-	}*/
 	
 	CONSTRAIN(RCData.throttle, 1000, 2000);
 	CONSTRAIN(RCData.roll, 1000, 2000);
 	CONSTRAIN(RCData.pitch, 1000, 2000);
 	CONSTRAIN(RCData.yaw, 1000, 2000);
- 
-	RCData.throttle -= 1000;
-	RCData.roll = PR_MAX_ANGLE * dbScaleLinear((RCData.roll - 1500), 500, APP_PR_DB);
-	RCData.pitch = PR_MAX_ANGLE * dbScaleLinear((RCData.pitch - 1500), 500, APP_PR_DB);
-	RCData.yaw = YAW_MAX_RATE * dbScaleLinear((RCData.yaw - 1500), 500, APP_YAW_DB);
+	return;
 }
 
 void ReceiveDataFromRC(void) {
 	if((RCRawData[0] == '$') && (RCRawData[1] == 'M') && (RCRawData[2] == '<')) {
 		if (RCRawData[4] == MSP_ARM_IT){
-			RCCommand = REQ_ARM;
+			RCData.command = REQ_ARM;
 		}
 		else if (RCRawData[4] == MSP_DISARM_IT){
-			RCCommand = REQ_DISARM;
+			RCData.command = REQ_DISARM;
 		}
 		else if (RCRawData[4] == MSP_ACC_CALI){
 			imuCaliFlag = 1;
-			RCCommand = REQ_IMU_CAL;
+			RCData.command = REQ_IMU_CAL;
 		}
 	}	
-	lastGetRCTime = millis();	//ms
 	NRF24_flushRXBuffer();
 }
 
@@ -119,15 +105,15 @@ void ReceiveDataFromRC(void) {
 	RCData.pitch= PR_MAX_ANGLE * dbScaleLinear((rcData[PITCH] - 1500),500,APP_PR_DB);
 	RCData.roll= PR_MAX_ANGLE * dbScaleLinear((rcData[ROLL] - 1500),500,APP_PR_DB);
 	
-	switch(RCCommand)
+	switch(RCData.command)
 	{
 		case REQ_ARM:
 			if(IMUCheck() && !warnings.LOW_BATTERY){	
-				RCCommand=ARMED;
+				RCData.command=ARMED;
 				flightModes.FLIGHT_ENABLED=0xA5;
 			}else{
 				flightModes.FLIGHT_ENABLED=0;
-				RCCommand=DISARMED;
+				RCData.command=DISARMED;
 			}
 		break;
 		case REQ_DISARM:
@@ -138,7 +124,7 @@ void ReceiveDataFromRC(void) {
 			thrustZInt=estimateHoverThru();
 			offLandFlag=0;
 			
-			RCCommand=DISARMED;
+			RCData.command=DISARMED;
 		break;
 		default:
 			break;
@@ -158,10 +144,10 @@ void ReceiveDataFromRC(void) {
 					rcData[ROLL] = RCRawData[11] | (RCRawData[12]<<8);
 					break;
 			  case MSP_ARM_IT:
-						RCCommand = REQ_ARM;
+						RCData.command = REQ_ARM;
 				break;
 			 case MSP_DISARM_IT:
-					RCCommand = REQ_DISARM;
+					RCData.command = REQ_DISARM;
 			 break;
 			 case MSP_ACC_CALI:
 					imuCaliFlag = 1;

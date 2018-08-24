@@ -15,7 +15,7 @@
 typedef union{
 	uint16_t ALL;
 	struct {
-		uint8_t NOT_ARMED : 1;
+		uint8_t EMPTY_BATTERY : 1; 
 		uint8_t LOW_BATTERY : 1;
 		uint8_t BATTERY_CHARGING : 1;
 		uint8_t IMU_NOT_CALIBRATED : 1;
@@ -24,6 +24,7 @@ typedef union{
 		uint8_t IMU_NOT_RESPONDING : 1;
 		uint8_t CRASH : 1;
 		uint8_t TILT_EXCEEDED : 1;
+		uint8_t MAX_ALTITUDE: 1;
 	};
 } warnings_t;
 extern warnings_t warnings;
@@ -36,6 +37,7 @@ typedef union{
 		uint8_t IN_FLIGHT : 1;
 		uint8_t LANDING : 1;
 		uint8_t TAKEOFF: 1;
+		uint8_t WINGS_LVL: 1;
 		uint8_t HEADLESS : 1;
 		uint8_t ALT_HOLD : 1;
 	};
@@ -45,6 +47,23 @@ extern flightModes_t flightModes;
 //NRF24 rx address
 extern uint8_t NRF24_rx_address[5];
  
+ typedef struct {
+	float throttle;
+    float roll;
+    float pitch;
+    float yaw;
+	uint8_t command
+} RCData_t;
+extern volatile RCData_t RCData;
+
+typedef struct {
+	float vs;
+    float roll;
+    float pitch;
+    float yawRate;
+} APData_t;
+extern APData_t APData;
+
 //Structure containing accel, gyro, mag, pressure, etc.
 typedef struct {
 	float raw_accel[3]; // m/s^2

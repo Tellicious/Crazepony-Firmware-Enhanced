@@ -94,7 +94,7 @@ void MPU6050_read_raw_data(void) {
     INSData.raw_accel[0] = (float) ((int16_t)((buf[0] << 8) | buf[1])) * _sc_accel;
     INSData.raw_accel[1] = (float) ((int16_t)((buf[2] << 8) | buf[3])) * _sc_accel;
     INSData.raw_accel[2] = (float) ((int16_t)((buf[4] << 8) | buf[5])) * _sc_accel;
-		INSData.raw_gyro[0] = (float) ((int16_t)((buf[8] << 8) | buf[9])) * _sc_gyro;
+	INSData.raw_gyro[0] = (float) ((int16_t)((buf[8] << 8) | buf[9])) * _sc_gyro;
     INSData.raw_gyro[1] = (float) ((int16_t)((buf[10] << 8) | buf[11])) * _sc_gyro;
     INSData.raw_gyro[2] = (float) ((int16_t)((buf[12] << 8) | buf[13])) * _sc_gyro;
 	printf("Acc x: %3.3f, y: %3.3f, z: %3.3f, Gyro x: %3.3f, y: %3.3f, z: %3.3f\r\n",INSData.raw_accel[0], INSData.raw_accel[1], INSData.raw_accel[2], INSData.raw_gyro[0], INSData.raw_gyro[1], INSData.raw_gyro[2]);

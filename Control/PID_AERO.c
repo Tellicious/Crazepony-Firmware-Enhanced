@@ -1,13 +1,6 @@
 #include "PID_AERO.h"
 #define constrain(in, inf, sup) (in < inf ? inf : (in > sup ? sup : in))
 
-PID_t PID_altitude;
-PID_t PID_roll;
-PID_t PID_pitch;
-PID_t PID_yaw;
-PID_t PID_yawRate;
-
-
 void PID_init(PID_t *PID, float kp_val, float ki_val, float kd_val, float nd_val, uint32_t dT, float sat_min, float sat_max){
 	float dT_sec;
 	dT_sec = (float) dT * 1e-3;

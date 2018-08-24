@@ -14,8 +14,8 @@ Battery.c file
 */
 
 #include "Battery.h"
-#include "ReceiveData.h"
-#include "control.h"
+#include "ConfigParams.h"
+#include "GlobalVariables.h"
 
 
 uint16_t Get_Adc(uint8_t ch) {
@@ -48,49 +48,3 @@ float GetBattVolt(void) {
 	Battery.voltage = Battery.ADCVal * BATT_K;
 	return Battery.voltage;
 }
-
-
-
-// Va tolto da qui!
-void BatteryCheck(void) {
-	static uint8_t lowBattCount = 0;
-	GetBattVolt();	
-
-	if(flightModes.FLIGHT_ENABLED){
-		if(Battery.voltage <= (BATT_LOW_VAL + 0.02)){
-				warnings.LOW_BATTERY = 1;
-		}
-		else{
-				warnings.LOW_BATTERY = 0;
-		}
-		
-		if(Battery.voltage <= BATT_LOW_VAL){
-			lowBattCount++;
-			if(lowBattCount > 8){
-				altCtrlMode = LANDING;
-				RCData.throttle = 1500; RCData.pitch = 1500; RCData.roll = 1500; RCData.yaw = 1500;
-			}
-		}
-		else{
-			lowBattCount = 0;
-		}
-		
-	}
-	else{
-		if((Battery.voltage < BATT_THRS_VAL) && (Battery.voltage > BATT_CHG_VAL)){
-			warnings.LOW_BATTERY = 1;
-		}else{
-			warnings.LOW_BATTERY = 0;
-		}
-	}
-	
-	if(Battery.voltage < BATT_CHG_VAL){ //on charge
-		warnings.BATTERY_CHARGING = 1;
-	}
-	else{
-		warnings.BATTERY_CHARGING = 0;
-	}
-}
-
-
-

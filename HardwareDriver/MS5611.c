@@ -168,7 +168,7 @@ void getTakeOffPressure(void){
 }
 
 void setReferencePressure(float referencePressureVal){
-	NAVData.inv_referencePressure = 1.0 / referencePressureVal;
+	NAVData.inv_referencePressure = 1.0f / referencePressureVal;
 	return;
 }
 

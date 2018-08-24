@@ -16,7 +16,7 @@
 #define MOTORS_MIN_PWM 0
 #define MOTOR_PWM_CONSTRAIN(x) ((x > MOTORS_MAX_PWM)?(MOTORS_MAX_PWM):((x < MOTORS_MIN_PWM)? MOTORS_MIN_PWM : x));
 
-void MotorsMix(int16_t* Motors, float Throttle, float Yaw, float Pitch, float Roll){
+void MotorsMix(int16_t* Motors, float Throttle, float Roll, float Pitch, float Yaw){
 	Motors[0] = (int16_t)(Throttle + Pitch + Roll - Yaw);    //M1
 	Motors[1] = (int16_t)(Throttle + Pitch - Roll + Yaw);    //M2	
 	Motors[2] = (int16_t)(Throttle - Pitch - Roll - Yaw);    //M3  

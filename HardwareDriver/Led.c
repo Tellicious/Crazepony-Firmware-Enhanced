@@ -59,36 +59,32 @@ void LEDCmd(void){
 	GPIO_WriteBit(GPIOA, GPIO_Pin_11, (BitAction) (LED_status & 0x01));	// Rear Left LED 1
 }
 
-void LEDFSM(void)
-{
-	if(LANDING == altCtrlMode){
-		LED_PATTERN_1;
-	}
-	else if((warnings.BATTERY_CHARGING)){	
+void LEDFSM(void){
+	if((warnings.BATTERY_CHARGING)){	
 		LED_PATTERN_0;
 	}
-	else if(imuCaliFlag){
-		LED_PATTERN_4;
-	}
-	else if(warnings.LOW_BATTERY){
+	else if(warnings.LOW_BATTERY || warnings. EMPTY_BATTERY){
 		LED_PATTERN_2;
 	}
-	else if(!imu.caliPass){
+	else if(warnings.IMU_ST_NOT_PASSED || warnings.IMU_NOT_RESPONDING){
 		LED_PATTERN_9;
 	}
-	else if(1 == LostRCFlag){
+	else if(warnings.LOST_RC){
 		LED_PATTERN_7;
 	}
 	else if(!imu.ready){
 		LED_PATTERN_4;
 	}
-	else {
+	else if(flightModes.LANDING || flightModes.TAKEOFF){
 		LED_PATTERN_6;
+	}
+	else {
+		LED_PATTERN_1;
 	}
 	LEDCmd();
 }
 
-void PowerOn(void){
+void LEDPowerOn(void){
   uint8_t i;
 	for(i=0;i<16;i++){
 		LED_PATTERN_7;
@@ -96,10 +92,15 @@ void PowerOn(void){
 		delay_ms(100);
 	}
 
-	for(i=0;i<6;i++)
-	{
+	for(i=0;i<6;i++){
 		LED_PATTERN_2;
 		LEDCmd();
-		delay_ms(100);
+		delay_ms(200);
 	}
+}
+
+void LEDBlinkFR(void){
+	LED_PATTERN_9;
+	LEDCmd();
+	delay_ms(200);
 }

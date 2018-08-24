@@ -19,7 +19,8 @@
 #define LED4_OFF   GPIO_ResetBits(GPIOB, GPIO_Pin_3)
 
 void LEDFSM(void);
-void PowerOn(void);
+void LEDPowerOn(void);
+void LEDBlinkFR(void);
 
 #endif
 
