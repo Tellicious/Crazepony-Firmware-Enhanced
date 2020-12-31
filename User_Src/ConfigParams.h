@@ -43,9 +43,9 @@
 #define ALTITUDE_KD	0.0f
 #define ALTITUDE_INT_SAT 300.0f
 
-#define PID_KD_COEFF 100.0f;
-#define PID_INNER_DT 10; //ms
-#define PID_OUTER_DT 20; //ms
+#define PID_KD_COEFF 100.0f
+#define PID_INNER_DT 10 //ms
+#define PID_OUTER_DT 20 //ms
 
 // Clock defines
 #define RCC_CLOCK_HSE

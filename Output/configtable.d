@@ -22,5 +22,5 @@
 .\output\configtable.o: User_Src\imu.h
 .\output\configtable.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\output\configtable.o: User_Src\SysConfig.h
-.\output\configtable.o: .\HardWareDriver\NRF24L01.h
+.\output\configtable.o: .\HardWareDriver\NRF24.h
 .\output\configtable.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

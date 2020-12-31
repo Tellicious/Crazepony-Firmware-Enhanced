@@ -7,7 +7,7 @@
 #include "Control.h"
 #include "imu.h"
 #include "SysConfig.h"
-#include "NRF24L01.h"
+#include "NRF24.h"
 #include "stdio.h"
 //
 #define TABLE_ADDRESS (STM32_FLASH_BASE+STM32_FLASH_OFFEST+0)
@@ -60,7 +60,7 @@ void TableToParam(void)
 		uint8_t i=0;
 		for(i=0;i<3;i++)
 		{
-			((float *)(&pitch_angle_PID))[i]=((float *)(&table.pidPitch))[i];
+/*			((float *)(&pitch_angle_PID))[i]=((float *)(&table.pidPitch))[i];
 			((float *)(&roll_angle_PID))[i]=((float *)(&table.pidRoll))[i];
 			((float *)(&yaw_angle_PID))[i]=((float *)(&table.pidYaw))[i];
 			
@@ -74,7 +74,7 @@ void TableToParam(void)
 			imu.accOffset[i]=table.accOffset[i];
 			imu.gyroOffset[i]=table.gyroOffset[i];
 			
-			
+	*/		
 		
 			#ifdef NEW_ATTI_CTRL
 			AttiCtrlParamsFromPIDTable();	//load to new ctrl param
@@ -101,7 +101,7 @@ void ParamToTable(void)
 		float temp;
 		for(i=0;i<3;i++)
 		{
-			((float *)(&table.pidPitch))[i]=((float *)(&pitch_angle_PID))[i];
+/*			((float *)(&table.pidPitch))[i]=((float *)(&pitch_angle_PID))[i];
 				temp =((float *)(&roll_angle_PID))[i];
 				*((float *)(&table.pidRoll) + i) =  ((float *)(&roll_angle_PID))[i];
 			((float *)(&table.pidRoll))[i]=((float *)(&roll_angle_PID))[i];
@@ -117,6 +117,7 @@ void ParamToTable(void)
 			 
 			table.accOffset[i]=imu.accOffset[i];
 			table.gyroOffset[i]=imu.gyroOffset[i];
+			*/
 		}
 		
 		//for(i=0;i<5;i++)
@@ -157,6 +158,7 @@ void ParamSetDefault(void)
 {
 		 
 #ifndef NEW_ATTI_CTRL	
+	/*
      pitch_angle_PID.P = 3.5;
      pitch_angle_PID.I = 0;//1.0;		//0
      pitch_angle_PID.D = 0;
@@ -186,10 +188,11 @@ void ParamSetDefault(void)
      yaw_rate_PID.P  = 20;
      yaw_rate_PID.I  = 0; 
      yaw_rate_PID.D  = 0; 
+		 */
 #else
 		AttiCtrlParamsSetDefault();
 #endif
-//
+/*
 			alt_PID.P=1.0;
 			alt_PID.I=0;
 			alt_PID.D=0;
@@ -206,7 +209,7 @@ void ParamSetDefault(void)
 			imu.gyroOffset[0]=-0.06097556;
 			imu.gyroOffset[1]=-0.03780485;
 			imu.gyroOffset[2]=0;
-			
+			*/
 		
 //		AttiCtrlParamsFromPIDTable();
 

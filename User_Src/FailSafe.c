@@ -49,7 +49,7 @@ void FailSafe(void)
 	//丢失遥控信号
 	//disconnected from the RC
 	newTime=millis();	//ms
-	lostRCTime=(newTime>lastGetRCTime)?(newTime-lastGetRCTime):(65536-lastGetRCTime+newTime);
+/*	lostRCTime=(newTime>lastGetRCTime)?(newTime-lastGetRCTime):(65536-lastGetRCTime+newTime);
 	if(lostRCTime > LOST_RC_TIME_MAX){
 		if(offLandFlag || (0 != flightModes.FLIGHT_ENABLED)){
 			//飞机已经离地offLandFlag，或者已经开启了怠速旋转flightModes.FLIGHT_ENABLED
@@ -59,12 +59,12 @@ void FailSafe(void)
 		LostRCFlag = 1;
 	}else{
 		LostRCFlag = 0;
-	}
+	}*/
 }
 
 //
 void AutoLand(void)
-{
+{/*
 	static uint32_t landStartTime=0;
 	uint32_t landTime=0;
 	
@@ -86,12 +86,12 @@ void AutoLand(void)
 			altCtrlMode=MANUAL;
 			flightModes.FLIGHT_ENABLED=0;
 		
-	}
+	}*/
 }
 //for copter launch and flight mode switch.  it's raw and simple for climb rate mode now
 //TOBE IMPROVED
 void FlightModeFSMSimple(void)
-{
+{/*
 			if(flightModes.FLIGHT_ENABLED)
 			{
 					if(RCData.throttle>=600 )
@@ -114,5 +114,5 @@ void FlightModeFSMSimple(void)
 							}
 					}
 					
-			} 
+			} */
 }

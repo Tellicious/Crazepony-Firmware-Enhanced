@@ -71,7 +71,7 @@ int main(void){
 
 	IMU_Init();			// sample rate and cutoff freq.  sample rate is too low now due to using dmp.
 	MotorsPWMFlash(10,10,10,10);
-	altCtrlMode=MANUAL;
+//	altCtrlMode=MANUAL;
 	// Get current pressure and set it as reference pressure for ground level
 	getTakeOffPressure();
 	setReferencePressure(NAVData.takeOffPressure);
@@ -98,7 +98,7 @@ int main(void){
 				} 
 				
 				CtrlAttiRate();
-				CtrlMotor();
+				CtrlMotors();
 
 				execTime[1]=micros()-startTime[1];
 		}
@@ -121,17 +121,17 @@ int main(void){
 			  
 				FlightModeFSMSimple();
 				
-				if(altCtrlMode==LANDING)	 
+				/*if(altCtrlMode==LANDING)	 
 				{	  
 						AutoLand();
-				}
+				}*/
 				
 				//高度融合
 		 		AltitudeCombineThread();
 
 				CtrlAlti();		 
 
-				CtrlAttiAng();	 
+				CtrlAttiAngle();	 
 				
 				execTime[3]=micros()-startTime[3];
 		}
@@ -147,7 +147,7 @@ int main(void){
 					BatteryCheck();
 				}
 				//Check if RC is still connected
-				RCCheck()
+				RCCheck();
 				//Check if tilt limit is exceeded
 				TiltCheck();
 				//Check if altitude limit is exceeded

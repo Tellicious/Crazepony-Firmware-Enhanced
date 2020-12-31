@@ -41,6 +41,7 @@
 .\output\main.o: User_Src\ConfigTable.h
 .\output\main.o: User_Src\IMUSO3.h
 .\output\main.o: User_Src\FailSafe.h
-.\output\main.o: .\HardWareDriver\I2C.h
 .\output\main.o: .\HardWareDriver\Init_Config.h
 .\output\main.o: .\Estimation\Altitude_KF.h
+.\output\main.o: User_Src\SafetyChecks.h
+.\output\main.o: .\Control\Autopilot.h

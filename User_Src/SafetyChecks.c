@@ -1,6 +1,8 @@
 #include "SafetyChecks.h"
 #include "ConfigParams.h"
 #include "GlobalVariables.h"
+#include "stm32f10x_it.h"
+#include "Battery.h"
 
 uint32_t lastGetRCTime;
 

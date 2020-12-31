@@ -52,7 +52,7 @@ extern uint8_t NRF24_rx_address[5];
     float roll;
     float pitch;
     float yaw;
-	uint8_t command
+	uint8_t command;
 } RCData_t;
 extern volatile RCData_t RCData;
 

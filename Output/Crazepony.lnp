@@ -24,6 +24,7 @@
 ".\output\imuso3.o"
 ".\output\failsafe.o"
 ".\output\globalvariables.o"
+".\output\safetychecks.o"
 ".\output\misc.o"
 ".\output\stm32f10x_gpio.o"
 ".\output\stm32f10x_rcc.o"

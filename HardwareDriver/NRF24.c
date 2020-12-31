@@ -1,4 +1,4 @@
-//  NRF24.cpp
+//  NRF24.c
 //
 //
 //  Created by Andrea Vivani on 24/11/15.

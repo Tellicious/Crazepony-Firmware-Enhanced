@@ -2,6 +2,7 @@
 #include "ConfigParams.h"
 #include "GlobalVariables.h"
 #include "PID_AERO.h"
+#include "Motors.h"
 
 //PID_t PID_altitude;
 PID_t PID_vertSpeed;
@@ -55,8 +56,8 @@ void CtrlAlti(void){
 }
 
 
-void CtrlMotors(void){
-	MotorsMix(Motors, PID_rollRate.output, PID_pitchRate.output, PID_yawRate.output);
+void CtrlMotors(void){ //Da sistemare
+	MotorsMix(Motors, 0, PID_rollRate.output, PID_pitchRate.output, PID_yawRate.output);
    	if(flightModes.FLIGHT_ENABLED && flightModes.IN_FLIGHT){
 		MotorsPWMFlash(Motors[0],Motors[1],Motors[2],Motors[3]);
 	}

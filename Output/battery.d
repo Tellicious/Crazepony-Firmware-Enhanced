@@ -20,5 +20,3 @@
 .\output\battery.o: .\User_Src\ConfigParams.h
 .\output\battery.o: .\User_Src\GlobalVariables.h
 .\output\battery.o: .\HardWareDriver\NRF24.h
-.\output\battery.o: .\Control\ReceiveData.h
-.\output\battery.o: .\Control\control.h
